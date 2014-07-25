@@ -77,9 +77,67 @@ The following fields should be modified per project:
 
 -   **version** : Mod version. Convention is to prefix it with the intended Minecraft version, i.e. `1.7.2-1.0`.
 -   **group** : Java package name. Naming convention is the same as the Java package naming convention, i.e. `com.github.skirkpatrick.letsmod`.
--   **archivesBaseName** : Name of the mod. Can include spaces.
+-   **archivesBaseName** : Mod identifier. Can contain spaces, but should it?
 
 The following fields may be modified depending on your needs:
 
 -   **minecraft.version** : Minecraft Forge version to use.
 -   **minecraft.assetDir** : Directory in which to store base game and forge assets.
+
+
+@Mod Class ([Episode 3](https://www.youtube.com/watch?v=lqb4WJEEIGI))
+----------
+
+### @Mod Annotation
+
+The `@Mod` annotation marks the main class to be loaded by the Forge Mod Loader (FML).
+
+Important `@Mod` attributes to set:
+-   **modid** : Unique identifier for mod. Should be the same as the `archivesBaseName` in build.gradle.
+-   **name** : Name of the mod. Probably the same as the ModId but with spaces.
+-   **version** : Mod version. Should be the same as the `version` in build.gradle.
+
+### FML Phases
+
+All FML event classes can be found in the external library package `cpw.mods.fml.common.event`.
+
+FML performs each phase across all mods at a time, so all mods will run the pre-initialization phase before any mod continues to the initialization phase.
+
+#### Pre-initialization (`FMLPreInitializationEvent`)
+
+-   Load configurations
+-   Initialize network handling
+-   Setup key bindings
+-   Initialize items
+-   Initialize blocks
+
+#### Initialization (`FMLInitializationEvent`)
+
+-   Setup GUI handler
+-   Setup tile entities
+-   Setup rendering
+-   Register crafting recipes
+-   Setup other general event handlers
+-   Start registering recipes
+
+#### Post-initialization (`FMLPostInitializationEvent`)
+
+Phase to wrap things up after other mods have loaded.
+
+### @Mod.EventHandler
+
+The `@Mod.EventHandler` subscribes a method to the event handler.
+
+Method argument determines the event type (phase). Argument should be an `FMLEvent` type from the `cpw.mods.fml.common.event` package.
+
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        ...
+    }
+
+### Mod Instance
+
+The `@Mod.Instance` annotation marks a static data member of your mod type as a safe, reliable instance that can be used. ModId should be given as the default argument.
+
+    @Mod.Instance("LetsMod")
+    public static LetsMod instance;
