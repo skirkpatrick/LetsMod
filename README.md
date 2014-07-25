@@ -24,12 +24,20 @@ Initial Setup ([Episode 1](https://www.youtube.com/watch?v=e6v5egIkThk))
     - gradlew
     - gradlew.bat
 4.  Setup workspace with decompiled Minecraft
-        $ gradlew setupDecompWorkspace
+
+    ```
+    $ gradlew setupDecompWorkspace
+    ```
+
 5.  Setup IDE workspace
-        $ # For Eclipse
-        $ gradlew eclipse
-        $ # For IntelliJ IDEA
-        $ gradlew idea
+
+    ```
+    $ # For Eclipse
+    $ gradlew eclipse
+    $ # For IntelliJ IDEA
+    $ gradlew idea
+    ```
+
 6.  Open project in IDE
 
     For Eclipse, select the `eclipse/` folder as the workspace.
@@ -45,11 +53,15 @@ Initial Setup ([Episode 1](https://www.youtube.com/watch?v=e6v5egIkThk))
 
 Upon opening the project in IDEA, I got a warning suggesting I import the Gradle project. I chose to do it the first time, and it starting configuring something for Maven which took forever. After starting over, I chose to ignore the message and opt to not have it display again, which works just fine.
 
+---
+
 #### No JDK setup for project
 
 ##### tl;dr: Press `CTRL+SHIFT+ALT+S`, select Project tab, add new JDK
 
 Apparently IntelliJ IDEA doesn't automatically detect JDK installs, so you have to set it up yourself. This is done in the Project Structure window, accessible from either File -> Project Structure, or pressing `CTRL+SHIFT+ALT+S`. Select the Project tab on the left, then use `New...` under the Project SDK section to select the desired JDK installation.
+
+---
 
 #### Missing Gradle assets (FileNotFound -> ~/.gradle/caches/minecraft/assets/.../\*\*\*.json)
 
