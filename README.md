@@ -75,14 +75,44 @@ Basic Gradle Configuration ([Episode 2](https://www.youtube.com/watch?v=9-gIMtN0
 
 The following fields should be modified per project:
 
--   **version** : Mod version. Convention is to prefix it with the intended Minecraft version, i.e. `1.7.2-1.0`.
--   **group** : Java package name. Naming convention is the same as the Java package naming convention, i.e. `com.github.skirkpatrick.letsmod`.
--   **archivesBaseName** : Mod identifier. Can contain spaces, but should it?
+-   `version` : Mod version. Convention is to prefix it with the intended Minecraft version, i.e. `1.7.2-1.0`.
+-   `group` : Java package name. Naming convention is the same as the Java package naming convention, i.e. `com.github.skirkpatrick.letsmod`.
+-   `archivesBaseName` : Mod identifier. Can contain spaces, but should it?
 
 The following fields may be modified depending on your needs:
 
--   **minecraft.version** : Minecraft Forge version to use.
--   **minecraft.assetDir** : Directory in which to store base game and forge assets.
+-   `minecraft.version` : Minecraft Forge version to use.
+-   `minecraft.assetDir` : Directory in which to store base game and forge assets.
+
+
+Source Folder Structure ([Episode 3](https://www.youtube.com/watch?v=lqb4WJEEIGI) and [Episode 4](https://www.youtube.com/watch?v=KchpGhnH5wg))
+-----------------------
+
+The Java convention should be used for the project source structure. Optional folders are marked with an asterisk (`*`). All other folders are required to be the way Minecraft and Forge expect.
+
+    <Project Root>
+    `---src
+        `---main
+            +---java
+            |   `---<Package)
+            `---resources
+                `---assets
+                    `---(modid)
+                        +---lang
+                        +---models*
+                        +---sounds
+                        `---textures
+                            +---blocks
+                            +---gui*
+                            `---items
+
+The `src/main/java` and `src/main/resources` folders should be marked as source folders.
+
+The `(Package)` folders should be a directory hierarchy based on your package name. For example, `src/main/java/com/github/skirkpatrick/letsmod/`.
+
+The `(modid)` folder should be named the same as the Mod Id/archivesBaseName, but all lowercase, i.e. `src/main/resources/assets/letsmod/`.
+
+The optional (`*`) folders are the convention used by Pahimar. These will not be automatically loaded by Forge, and must be configured to do so.
 
 
 @Mod Class ([Episode 3](https://www.youtube.com/watch?v=lqb4WJEEIGI))
@@ -93,9 +123,9 @@ The following fields may be modified depending on your needs:
 The `@Mod` annotation marks the main class to be loaded by the Forge Mod Loader (FML).
 
 Important `@Mod` attributes to set:
--   **modid** : Unique identifier for mod. Should be the same as the `archivesBaseName` in build.gradle.
--   **name** : Name of the mod. Probably the same as the ModId but with spaces.
--   **version** : Mod version. Should be the same as the `version` in build.gradle.
+-   `modid` : Unique identifier for mod. Should be the same as the `archivesBaseName` in build.gradle.
+-   `name` : Name of the mod. Probably the same as the ModId but with spaces.
+-   `version` : Mod version. Should be the same as the `version` in build.gradle.
 
 ### FML Phases
 
@@ -141,3 +171,27 @@ The `@Mod.Instance` annotation marks a static data member of your mod type as a 
 
     @Mod.Instance("LetsMod")
     public static LetsMod instance;
+
+
+mcmod.info ([Episode 4](https://www.youtube.com/watch?v=KchpGhnH5wg))
+--------------------------
+
+The `mcmod.info` is a JSON formatted file that contains information about the mod to be displayed in the Mods menu accessible from the game's main menu. It should be placed in the `src/main/resources` directory.
+
+Pahimar's suggestion: Just copy the mdmod.info from another mod and modify it as necessary to ensure correct formatting.
+
+The fields are as follows:
+
+-   `modid` : The Mod Id
+-   `name` : Name of the mod. Same as specified in the `@Mod` attributes.
+-   `description` : A short description of the mod.
+-   `version` : Mod version. Should be the same as specified in `build.gradle`, but without the Minecraft version prepended, i.e. `0.1`.
+-   `mcversion` : Minecraft version the mod is designed for. This would be the prepended bit in the `build.gradle` version.
+-   `url` : URL to get more information about the mod, likely the mod homepage, if one exists.
+-   `updateUrl` : This field does nothing!
+-   `authorList` : List of mod authors.
+-   `credits` : Credits due, if any.
+-   `logoFile` : Path (?) to a PNG file to be used as the logo on the mod info screen. Maximum dimensions are 256x256.
+-   `screenshots` : This field does nothing!
+-   `parent` : Declares the mod as a child of another mod.
+-   `dependencies` : List of mods on which the mod is dependent.
