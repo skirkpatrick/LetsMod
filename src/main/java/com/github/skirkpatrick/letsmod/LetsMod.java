@@ -1,20 +1,21 @@
 package com.github.skirkpatrick.letsmod;
 
 import com.github.skirkpatrick.letsmod.proxy.Proxy;
+import com.github.skirkpatrick.letsmod.reference.Reference;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = "LetsMod", name = "Let's Mod", version = "1.7.2-0.1")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class LetsMod {
 
-    @Mod.Instance("LetsMod")
+    @Mod.Instance(Reference.MOD_ID)
     public static LetsMod instance;
 
-    @SidedProxy(clientSide = "com.github.skirkpatrick.letsmod.proxy.ClientProxy",
-                serverSide = "com.github.skirkpatrick.letsmod.proxy.ServerProxy")
+    @SidedProxy(clientSide = Reference.CLIENT_PROXY,
+                serverSide = Reference.SERVER_PROXY)
     public static Proxy proxy;
 
     @Mod.EventHandler

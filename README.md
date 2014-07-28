@@ -200,8 +200,21 @@ The fields are as follows:
 Sided Proxy ([Episode 5](https://www.youtube.com/watch?v=oVq5kslZJc4))
 -----------
 
-Proxy classes simplify writing mods to work on both the Minecraft client and thededicated server client. A base proxy class can be used to define code common to both clients,  while client- and server-specific subclasses contain code for unique operations. Forge refers to this concept as a 'sided proxy'.
+Proxy classes simplify writing mods to work on both the Minecraft client and the dedicated server client. A base proxy class can be used to define code common to both clients,  while client- and server-specific subclasses contain code for unique operations. Forge refers to this concept as a 'sided proxy'.
 
 The SidedProxy annotation is used to inject a static instance of the appropriate Proxy implementation at runtime (such as a member in your base mod class). The clientSide attribute specifies the client proxy and the serverSide attribute specifies the server proxy.
 
 This post gives a better explanation of proxies than Pahimar does: [http://greyminecraftcoder.blogspot.com/2013/11/how-forge-starts-up-your-code.html](http://greyminecraftcoder.blogspot.com/2013/11/how-forge-starts-up-your-code.html).
+
+
+Reference Classes ([Episode 5](https://www.youtube.com/watch?v=oVq5kslZJc4))
+-----------------
+
+Reference classes provide a centralized place to store constants that may be referenced in multiple places across the code base. This provides a couple of advantages:
+
+-   If a value needs to be modified or updated, it only has to be done in one place
+-   Errors are less likely to be introduced from typos
+-   Keeps code [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself)
+-   Constants are all kept in a predictable location
+
+These classes are written the same as for any Java project: a class with `public static final` data members.
