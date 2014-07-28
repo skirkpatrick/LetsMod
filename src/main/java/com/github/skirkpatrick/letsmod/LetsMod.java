@@ -1,6 +1,8 @@
 package com.github.skirkpatrick.letsmod;
 
+import com.github.skirkpatrick.letsmod.proxy.Proxy;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -10,6 +12,10 @@ public class LetsMod {
 
     @Mod.Instance("LetsMod")
     public static LetsMod instance;
+
+    @SidedProxy(clientSide = "com.github.skirkpatrick.letsmod.proxy.ClientProxy",
+                serverSide = "com.github.skirkpatrick.letsmod.proxy.ServerProxy")
+    public static Proxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
