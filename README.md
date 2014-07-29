@@ -218,3 +218,9 @@ Reference classes provide a centralized place to store constants that may be ref
 -   Constants are all kept in a predictable location
 
 These classes are written the same as for any Java project: a class with `public static final` data members.
+
+
+Utility Classes ([Episode 5](https://www.youtube.com/watch?v=oVq5kslZJc4))
+---------------
+
+As with any Java project (or any coding project, for that matter), utility classes can come in handy for defining `static` methods for perfoming common operations. This can including things such as performing bulk operations (such as on `List`s) or performing tasks that don't fit as instance methods elsewhere.
