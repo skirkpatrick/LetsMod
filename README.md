@@ -224,3 +224,15 @@ Utility Classes ([Episode 5](https://www.youtube.com/watch?v=oVq5kslZJc4))
 ---------------
 
 As with any Java project (or any coding project, for that matter), utility classes can come in handy for defining `static` methods for perfoming common operations. This can including things such as performing bulk operations (such as on `List`s) or performing tasks that don't fit as instance methods elsewhere.
+
+
+Handling Configurations ([Episode 6](https://www.youtube.com/watch?v=OIF98zlBA_M))
+-----------------------
+
+Writing a `ConfigurationHandler` can be useful in loading and editing mod configurations. Forge provides a `Configuration` class that simplifies interacting with the configuration file itself and allows value defaulting.
+
+The configuration should be loaded in the pre-initialization phase, and the `FMLPreInitializationEvent#getSuggestedConfigurationFile()` method provides a handy default for getting a handle to the config file itself, which can then be passed to the `Configuration` constructor. The default name for the config file is `<modId>.cfg`.
+
+The `category` parameter that's accepted by the various `Configuration.get` methods refers to the grouping in the config file under which the value is expected to be stored.
+
+Pahimar mentions that a good pattern for loading configuration values in the `ConfigurationHandler` initialization method is to load the configuration and read the values in a `try` block and save the configuration in a `finally` block, just in case any file I/O errors occur. This doesn't seem right, though, as `IOException` are handled by `Configuration#load()` and, in fact, only `RuntimeException`s appear to be thrown by that method. Furthermore, Pahimar doesn't even follow this practice in his own [Equivalent Exchange 3 `ConfigurationHandler`](https://github.com/pahimar/Equivalent-Exchange-3/blob/master/src/main/java/com/pahimar/ee3/handler/ConfigurationHandler.java).

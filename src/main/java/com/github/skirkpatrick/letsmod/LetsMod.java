@@ -1,5 +1,6 @@
 package com.github.skirkpatrick.letsmod;
 
+import com.github.skirkpatrick.letsmod.configuration.ConfigurationHandler;
 import com.github.skirkpatrick.letsmod.proxy.Proxy;
 import com.github.skirkpatrick.letsmod.reference.Reference;
 import cpw.mods.fml.common.Mod;
@@ -20,7 +21,8 @@ public class LetsMod {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
+        // Load configuration
+        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
     }
 
     @Mod.EventHandler
