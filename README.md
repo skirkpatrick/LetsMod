@@ -236,3 +236,19 @@ The configuration should be loaded in the pre-initialization phase, and the `FML
 The `category` parameter that's accepted by the various `Configuration.get` methods refers to the grouping in the config file under which the value is expected to be stored.
 
 Pahimar mentions that a good pattern for loading configuration values in the `ConfigurationHandler` initialization method is to load the configuration and read the values in a `try` block and save the configuration in a `finally` block, just in case any file I/O errors occur. This doesn't seem right, though, as `IOException`s are handled by `Configuration#load()` and, in fact, only `RuntimeException`s appear to be thrown by that method. Furthermore, Pahimar doesn't even follow this practice in his own [Equivalent Exchange 3 `ConfigurationHandler`](https://github.com/pahimar/Equivalent-Exchange-3/blob/master/src/main/java/com/pahimar/ee3/handler/ConfigurationHandler.java).
+
+
+Updating Minecraft and Forge ([Episode 7](https://www.youtube.com/watch?v=M-yxLJEtx7Q))
+----------------------------
+
+Updating Minecraft and Forge simply requires updating the `version` and `minecraft.version` properties in build.gradle and the `VERSION` constant in `Reference.java` (if not being set automatically), cleaning the dependencies, then running the running the same gradle tasks as when setting up the workspace:
+
+    $ # Clean dependencies
+    $ gradlew clean
+    $ # Redownload dependencies
+    $ gradlew setupDecompWorkspace
+    $ # Regenerate IDE workspace files
+    $ gradlew idea # For IDEA
+    $ # gradlew eclipse # For Eclipse
+
+Just as when setting up the workspace initially, `gradlew setupDecompWorkspace` may need to be run several times if getting exceptions when launching Minecraft.
