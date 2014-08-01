@@ -3,13 +3,17 @@ package com.github.skirkpatrick.letsmod;
 import com.github.skirkpatrick.letsmod.configuration.ConfigurationHandler;
 import com.github.skirkpatrick.letsmod.proxy.Proxy;
 import com.github.skirkpatrick.letsmod.reference.Reference;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
+@Mod(modid = Reference.MOD_ID,
+        name = Reference.MOD_NAME,
+        version = Reference.VERSION,
+        guiFactory = Reference.GUI_FACTORY)
 public class LetsMod {
 
     @Mod.Instance(Reference.MOD_ID)
@@ -23,6 +27,7 @@ public class LetsMod {
     public void preInit(FMLPreInitializationEvent event) {
         // Load configuration
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+        FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
     }
 
     @Mod.EventHandler

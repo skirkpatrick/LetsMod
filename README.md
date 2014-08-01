@@ -226,16 +226,40 @@ Utility Classes ([Episode 5](https://www.youtube.com/watch?v=oVq5kslZJc4))
 As with any Java project (or any coding project, for that matter), utility classes can come in handy for defining `static` methods for perfoming common operations. This can including things such as performing bulk operations (such as on `List`s) or performing tasks that don't fit as instance methods elsewhere.
 
 
-Handling Configurations ([Episode 6](https://www.youtube.com/watch?v=OIF98zlBA_M))
+Handling Configurations ([Episode 6](https://www.youtube.com/watch?v=OIF98zlBA_M) and [Episode 7](https://www.youtube.com/watch?v=M-yxLJEtx7Q))
 -----------------------
 
 Writing a `ConfigurationHandler` can be useful in loading and editing mod configurations. Forge provides a `Configuration` class that simplifies interacting with the configuration file itself and allows value defaulting.
 
 The configuration should be loaded in the pre-initialization phase, and the `FMLPreInitializationEvent#getSuggestedConfigurationFile()` method provides a handy default for getting a handle to the config file itself, which can then be passed to the `Configuration` constructor. The default name for the config file is `<modId>.cfg`.
 
-The `category` parameter that's accepted by the various `Configuration.get` methods refers to the grouping in the config file under which the value is expected to be stored.
+The `category` parameter that's accepted by the various `Configuration.get` methods refers to the grouping in the config file under which the value is expected to be stored. `Configuration.CATEGORY_GENERAL` is the general category.
 
-Pahimar mentions that a good pattern for loading configuration values in the `ConfigurationHandler` initialization method is to load the configuration and read the values in a `try` block and save the configuration in a `finally` block, just in case any file I/O errors occur. This doesn't seem right, though, as `IOException`s are handled by `Configuration#load()` and, in fact, only `RuntimeException`s appear to be thrown by that method. Furthermore, Pahimar doesn't even follow this practice in his own [Equivalent Exchange 3 `ConfigurationHandler`](https://github.com/pahimar/Equivalent-Exchange-3/blob/master/src/main/java/com/pahimar/ee3/handler/ConfigurationHandler.java).
+To allow users to modify the configuration from within the Minecraft GUI, an event handling instance method should be added to the `ConfigurationHandler`. This method should take a `ConfigChangedEvent.OnConfigChangedEvent` and should simply reload the configuration if the `modID` attribute matches ours. The class should also be subscribed to the FML event bus, and the steps below should be taken.
+
+### Configuration GUI
+
+To make an in-game GUI configuration menu, we must define the main `GuiScreen` that will load when the mod's `Config` button is first press. This class should extend `GuiConfig` and should define a single-argument constructor accepting a `GuiScreen`. This constructor only needs to call its parent's constructor, through which a few properties about the configuration menu can be defined, such as whether or not any options require a world or game restart.
+
+FML uses a `GuiFactory` class that implements `IModGuiFactory` to get information about the configuration menu. Of the four methods declared in the `IModGuiFactory`, only `mainConfigGuiClass` is currently used. This method should return the `class` of the implemented `GuiConfig`.
+
+This final step is to define the `guiFactory` of the `@Mod` annotation to be the full package+name of the `GuiFactory` class. (Reference constant, hint hint)
+
+This post from Minalien contains good information and examples for the configu GUIs: [http://minalien.com/minecraft-forge-feature-spotlight-config-guis/](http://minalien.com/minecraft-forge-feature-spotlight-config-guis/)
+
+
+Subscribing to Events and the Event Bus ([Episode 7](https://www.youtube.com/watch?v=M-yxLJEtx7Q))
+---------------------
+
+The `@SubscribeEvent` annotation is used to subscribe a method to an event. The method parameter determines what event the method handles and should be subscribed to.
+
+All clases that contain event listeners need to be registered on the event bus, through which all events get processed. There is one for Forge and one for FML. Look at the package name of the event listener parameter to find which event bus to register that class on.
+
+### Subscribing to the FML event bus
+
+At this point, we've only subscribed the `ConfigurationHandler` to the event bus, and we're doing it right after the `ConfigurationHandler` instance has been initialized. It's probably a good idea to register classes to the event bus right after they've been initialized.
+
+    FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
 
 Updating Minecraft and Forge ([Episode 7](https://www.youtube.com/watch?v=M-yxLJEtx7Q))

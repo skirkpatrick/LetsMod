@@ -10,4 +10,5 @@ public class Reference {
     /* Class location constants */
     public static final String CLIENT_PROXY = "com.github.skirkpatrick.letsmod.proxy.ClientProxy";
     public static final String SERVER_PROXY = "com.github.skirkpatrick.letsmod.proxy.ServerProxy";
+    public static final String GUI_FACTORY = "com.github.skirkpatrick.letsmod.client.gui.GuiFactory";
 }
