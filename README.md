@@ -276,3 +276,11 @@ Updating Minecraft and Forge simply requires updating the `version` and `minecra
     $ # gradlew eclipse # For Eclipse
 
 Just as when setting up the workspace initially, `gradlew setupDecompWorkspace` may need to be run several times if getting exceptions when launching Minecraft.
+
+
+Logging ([Episode 7](https://www.youtube.com/watch?v=M-yxLJEtx7Q))
+-------
+
+FML uses log4j for logging, which provides useful information such as timestamps and thread info in log entries, as well as different levels of logging. The static `FMLLog.log` method is used for creating a log entry, and it takes the mod name (`Reference.MOD_NAME`), the log level (from the log4j `Level` class), and the message to be logged.
+
+As with most projects, a `LogHelper` utility class can be helpful for defining wrapper methods for each log level (info, warn, fatal, etc), so all you need to pass is the log message/`Object` to be logged.

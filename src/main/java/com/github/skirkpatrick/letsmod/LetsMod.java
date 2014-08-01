@@ -4,6 +4,7 @@ import com.github.skirkpatrick.letsmod.configuration.ConfigurationHandler;
 import com.github.skirkpatrick.letsmod.proxy.Proxy;
 import com.github.skirkpatrick.letsmod.reference.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
+import com.github.skirkpatrick.letsmod.util.Log;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -25,18 +26,24 @@ public class LetsMod {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        Log.trace("Beginning Pre-initialization");
+
         // Load configuration
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+
+        Log.trace("Finished Pre-initialization");
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-
+        Log.trace("Beginning Initialization");
+        Log.trace("Finished Initialization");
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-
+        Log.trace("Beginning Post-initialization");
+        Log.trace("Finished Post-initialization");
     }
 }
