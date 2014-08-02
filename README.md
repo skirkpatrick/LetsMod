@@ -265,7 +265,7 @@ At this point, we've only subscribed the `ConfigurationHandler` to the event bus
 Updating Minecraft and Forge ([Episode 7](https://www.youtube.com/watch?v=M-yxLJEtx7Q))
 ----------------------------
 
-Updating Minecraft and Forge simply requires updating the `version` and `minecraft.version` properties in build.gradle and the `VERSION` constant in `Reference.java` (if not being set automatically), cleaning the dependencies, then running the running the same gradle tasks as when setting up the workspace:
+Updating Minecraft and Forge simply requires updating the `version` and `minecraft.version` properties in build.gradle, the `VERSION` constant in `Reference.java` (if not being set automatically), and the `mcversion` field in mcmod.info. Then just clean the dependencies, and run the same gradle tasks as when setting up the workspace:
 
     $ # Clean dependencies
     $ gradlew clean
