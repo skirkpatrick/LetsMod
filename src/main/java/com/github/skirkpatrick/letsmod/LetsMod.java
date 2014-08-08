@@ -1,10 +1,11 @@
 package com.github.skirkpatrick.letsmod;
 
 import com.github.skirkpatrick.letsmod.configuration.ConfigurationHandler;
+import com.github.skirkpatrick.letsmod.init.ModItems;
 import com.github.skirkpatrick.letsmod.proxy.Proxy;
 import com.github.skirkpatrick.letsmod.reference.Reference;
-import cpw.mods.fml.common.FMLCommonHandler;
 import com.github.skirkpatrick.letsmod.util.Log;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -31,6 +32,9 @@ public class LetsMod {
         // Load configuration
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+
+        // Register items
+        ModItems.init();
 
         Log.trace("Finished Pre-initialization");
     }

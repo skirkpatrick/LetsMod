@@ -293,8 +293,28 @@ The `Item` class in Minecraft defines properties of items, but does not represen
 
 At the most basic level, defining an item just requires defining a subclass of `Item`, and registering an instance of that class in the item registry during the pre-initialization phase.
 
-Defining a base item class for your mod can be helpful in abstracting out boiler plate such as registring textures or getting the item name. Additionally, definine an initialization class for registering all items in one place can be useful.
+Defining a base item class for your mod can be helpful in abstracting out boiler plate such as registring textures or getting the item name. Additionally, definining an initialization class for registering all items in one place can be useful.
 
-### Unlocalized Name
+### Item Label
+
+By default, an item is named from its 'unlocalized name', which is really just the internal name of the item, i.e. the id. This can be used to construct a key for a localized resource file that maps it to a label.
+
+The localized resource files go in the `resources/assets/<modid>/lang` folder with a name such as `en_US.lang`. This file is simply a key/value mapping for localized strings.
+
+Item label keys are of the form `item.<modId>:<itemName>.name`.
+
+Normally the full unlocalized name is of the format `item.<itemName>`, but overriding `Item.getUnlocalizedName()` to return this in the format `item.<modId>:<itemName>` will, according to Pahimar, save some trouble later by simplifying things.
 
 ### Textures
+
+Minecraft item textures are 16x16 PNG files, so the first step is to create the texture and place it in the `resources/assets/<modid>/textures/items` folder with the same name as the item.
+
+The next step is to register the icon for the item, which, for basic textures, simply requires overriding the `registerIcons(IIconRegister)` method and calling `IIconRegister.registerIcon(String)`, passing in the unwrapped unlocalized item name (that is, the name without the `item.` prefix), and assigning the return value to the `itemIcon` instance member. This method should also be annotated as client side only.
+
+More advanced item textures have not been covered yet.
+
+
+@SideOnly ([Episode 8](https://www.youtube.com/watch?v=ZZIkOdODGqs))
+---------
+
+The `@SideOnly` annotation is used to mark a method as only being applicable to one side: either the server (`Side.SERVER`), or the client (`Side.CLIENT`).
